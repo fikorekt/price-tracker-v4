@@ -3,1503 +3,1339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3Dcim PriceTracker Pro - Canlı Fiyat Karşılaştırma</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Fiyat Karşılaştırma Aracı</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #22c55e;
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #64748b;
-            --border: #334155;
-            --border-light: #475569;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            --green-bg: #22c55e;
-            --red-bg: #ef4444;
-            --yellow-bg: #f59e0b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-secondary);
-            padding: 0.5rem 1rem;
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin: 20px auto;
+            max-width: 1400px;
         }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .btn {
-            background: var(--primary);
+        
+        .header-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
+            padding: 30px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
         }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border-light);
-        }
-
-        /* Upload Section */
+        
         .upload-section {
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .upload-area {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 3rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px;
+            border: 2px dashed #dee2e6;
             transition: all 0.3s ease;
-            cursor: pointer;
-            background: var(--bg-secondary);
         }
-
-        .upload-area:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
+        
+        .upload-section:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
         }
-
-        .upload-area.dragover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        /* Comparison Table */
-        .comparison-section {
-            padding: 2rem 0;
-            display: none;
-        }
-
-        .table-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .auto-refresh-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(51, 65, 85, 0.3);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .search-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-            background: rgba(51, 65, 85, 0.3);
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            min-width: 250px;
-        }
-
-        .search-box:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-        }
-
-        .search-box i.fa-search {
-            color: var(--text-muted);
-            margin-right: 0.5rem;
-        }
-
-        .search-box input {
-            background: transparent;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
-            outline: none;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            flex: 1;
-            padding: 0.25rem 0;
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-box button {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 0.25rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            margin-left: 0.5rem;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .search-box.has-text button {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .search-box button:hover {
-            background: rgba(71, 85, 105, 0.3);
-            color: var(--text-primary);
-        }
-
-        .search-results {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        .search-results.filtered {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .product-row {
-            transition: all 0.3s ease;
-        }
-
-        .product-row.hidden {
-            display: none;
-        }
-
-        .product-row.highlighted td:first-child {
-            background: rgba(99, 102, 241, 0.2);
-            border-left: 3px solid var(--primary);
-        }
-
-        .btn-refresh {
-            background: var(--secondary);
-            color: white;
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-refresh:hover {
-            background: #059669;
-            transform: translateY(-1px);
-        }
-
-        .btn-refresh:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-refresh.loading {
-            background: var(--warning);
-        }
-
-        .btn-refresh.loading i {
-            animation: spin 1s linear infinite;
-        }
-
-        .refresh-interval select {
-            background: rgba(51, 65, 85, 0.5);
-            color: var(--text-primary);
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            border-radius: 4px;
-            padding: 0.4rem 0.6rem;
-            font-size: 0.85rem;
-        }
-
-        .comparison-table-container {
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 8px;
-            border: 1px solid rgba(51, 65, 85, 0.4);
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            max-width: 1200px;
-            margin: 0 auto;
-            backdrop-filter: blur(10px);
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-
-        .comparison-table th {
-            background: rgba(51, 65, 85, 0.6);
-            color: var(--text-primary);
-            padding: 0.6rem 0.4rem;
-            text-align: center;
-            font-weight: 500;
-            border-bottom: 1px solid rgba(71, 85, 105, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            font-size: 0.75rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .comparison-table th:first-child {
-            text-align: left;
-            min-width: 160px;
-            max-width: 180px;
-        }
-
-        .comparison-table td {
-            padding: 0.4rem 0.3rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(71, 85, 105, 0.2);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .comparison-table td:first-child {
-            text-align: left;
-            font-weight: 400;
-            background: rgba(51, 65, 85, 0.4);
-            position: sticky;
-            left: 0;
-            z-index: 5;
-            min-width: 160px;
-            max-width: 180px;
-            word-wrap: break-word;
-            font-size: 0.75rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .price-cell {
-            font-weight: 500;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            margin: 1px;
-            padding: 0.3rem 0.2rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .price-cell.best-price {
-            background: var(--green-bg);
-            color: white;
-            box-shadow: 0 1px 4px rgba(34, 197, 94, 0.3);
-        }
-
-        .price-cell.worst-price {
-            background: var(--red-bg);
-            color: white;
-            box-shadow: 0 1px 4px rgba(239, 68, 68, 0.3);
-        }
-
-        .price-cell.no-price {
-            background: rgba(15, 23, 42, 0.5);
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .price-cell.updating {
-            animation: updating 1.5s infinite;
-        }
-
-        @keyframes updating {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        .price-change {
-            font-size: 0.65rem;
-            margin-top: 0.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.2rem;
-        }
-
-        .price-change.positive {
-            color: var(--danger);
-        }
-
-        .price-change.negative {
-            color: var(--success);
-        }
-
-        .last-updated {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            margin-top: 0.15rem;
-        }
-
-        /* Statistics */
-        .stats-section {
-            display: none;
-            padding: 2rem 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .stat-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(51, 65, 85, 0.3);
-            border-radius: 8px;
-            padding: 1.2rem;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        /* Progress */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .loading-content {
-            text-align: center;
-            max-width: 500px;
-            padding: 2rem;
-        }
-
-        .versus-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .versus-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .versus-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .versus-icon.products {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            animation: pulseLeft 2s ease-in-out infinite;
-        }
-
-        .versus-icon.competitors {
-            background: linear-gradient(135deg, #10b981, #06d6a0);
-            animation: pulseRight 2s ease-in-out infinite;
-        }
-
-        .versus-vs {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-            animation: vsGlow 1.5s ease-in-out infinite alternate;
-        }
-
-        .circular-progress {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 2rem auto;
-        }
-
-        .circular-progress svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .circular-progress .bg-circle {
-            fill: none;
-            stroke: var(--bg-tertiary);
-            stroke-width: 8;
-        }
-
-        .circular-progress .progress-circle {
-            fill: none;
-            stroke: url(#progressGradient);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 314.16;
-            stroke-dashoffset: 314.16;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        .progress-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .loading-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .loading-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .current-product {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            max-width: 400px;
-        }
-
-        .current-product-name {
+            border-radius: 25px;
+            padding: 12px 30px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
         }
-
-        .current-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
-
-        @keyframes pulseLeft {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
         }
-
-        @keyframes pulseRight {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        
+        .progress {
+            height: 25px;
+            border-radius: 15px;
+            background: #e9ecef;
+            overflow: hidden;
         }
-
-        @keyframes vsGlow {
-            0% { text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
-            100% { text-shadow: 0 0 30px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.3); }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 0.3s ease;
         }
-
-        .battle-sparks {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            pointer-events: none;
+        
+        .table-container {
+            margin: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        .spark {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--warning);
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: 600;
+        }
+        
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.01);
+        }
+        
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+            border-color: #e9ecef;
+        }
+        
+        .rank-badge {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
-            animation: sparkle 1.5s ease-in-out infinite;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            color: white;
         }
-
-        .spark:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
-        .spark:nth-child(2) { top: 20%; right: 20%; animation-delay: 0.3s; }
-        .spark:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 0.6s; }
-        .spark:nth-child(4) { bottom: 20%; right: 20%; animation-delay: 0.9s; }
-        .spark:nth-child(5) { top: 50%; left: 10%; animation-delay: 0.15s; }
-        .spark:nth-child(6) { top: 50%; right: 10%; animation-delay: 0.45s; }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
+        
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A9A9A9); }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #B8860B); }
+        .rank-other { background: linear-gradient(135deg, #6c757d, #495057); }
+        
+        .price-cell {
+            font-size: 1.1em;
+            font-weight: 600;
         }
-
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            max-width: 400px;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+        
+        .main-product {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7) !important;
+            border-left: 4px solid #f39c12;
         }
-
-        .notification.show {
-            transform: translateX(0);
+        
+        .error-row {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb) !important;
+            color: #721c24;
         }
-
-        .notification.success {
-            border-color: var(--success);
-            background: rgba(34, 197, 94, 0.1);
+        
+        .not-found-row {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb) !important;
+            color: #0c5460;
         }
-
-        .notification.error {
-            border-color: var(--danger);
-            background: rgba(239, 68, 68, 0.1);
+        
+        .alert {
+            border-radius: 15px;
+            border: none;
+            padding: 20px;
+            margin: 20px;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-controls {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .search-box {
-                min-width: 200px;
-            }
-
-            .comparison-table-container {
-                margin: 0 -1rem;
-                border-radius: 0;
-            }
-
-            .comparison-table {
-                font-size: 0.75rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.4rem 0.2rem;
-            }
-
-            .comparison-table td:first-child {
-                min-width: 120px;
-                max-width: 150px;
-            }
-            
-            .company-header {
-                min-width: 80px;
-                max-width: 100px;
-            }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            color: #0c5460;
         }
-
-        /* Loading Animation */
-        .loading {
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+        }
+        
+        .loading-spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4facfe;
             border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s linear infinite;
         }
-
+        
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        .table-wrapper {
-            overflow-x: auto;
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .site-favicon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        
+        .url-cell {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .url-cell:hover {
+            overflow: visible;
+            white-space: normal;
+            word-break: break-all;
+        }
+        
+        .comparison-summary {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(33, 150, 243, 0.1);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        
+        .summary-value {
+            font-weight: bold;
+            color: #0d47a1;
+        }
+        
+        .log-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px;
+            max-height: 300px;
             overflow-y: auto;
-            max-height: 65vh;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #dee2e6;
         }
-
-        .company-header {
-            writing-mode: horizontal-tb;
-            text-align: center;
-            min-width: 90px;
-            max-width: 110px;
-            font-weight: 500;
+        
+        .log-entry {
+            padding: 2px 0;
+            border-bottom: 1px solid #e9ecef;
         }
-
-        .update-indicator {
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-timestamp {
+            color: #6c757d;
+            font-size: 0.8em;
+        }
+        
+        .log-message {
+            margin-left: 10px;
+        }
+        
+        .log-error {
+            color: #dc3545;
+        }
+        
+        .log-success {
+            color: #28a745;
+        }
+        
+        .log-info {
+            color: #17a2b8;
+        }
+        
+        .notification-badge {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 6px;
-            height: 6px;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
             border-radius: 50%;
-            background: var(--warning);
-            animation: pulse 1s infinite;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            max-width: 350px;
+        }
+        
+        .notification {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-left: 4px solid #4facfe;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .notification-message {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        
+        .notification-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        
+        .export-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid #4facfe;
+            color: #4facfe;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: #4facfe;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4facfe;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .filter-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+        
+        .filter-item label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            padding: 8px 12px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header-section {
+                padding: 20px;
+                border-radius: 15px 15px 0 0;
+            }
+            
+            .upload-section, .table-container, .alert, .comparison-summary, .log-container, .export-section, .filter-section {
+                margin: 10px;
+            }
+            
+            .table-responsive {
+                font-size: 0.9em;
+            }
+            
+            .url-cell {
+                max-width: 150px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-item {
+                min-width: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav container">
-            <div class="logo">
-                <i class="fas fa-chart-line"></i>
-                3Dcim PriceTracker Pro
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header-section">
+                <h1><i class="fas fa-chart-line me-3"></i>Fiyat Karşılaştırma Aracı</h1>
+                <p class="mb-0">Excel dosyası yükleyerek toplu fiyat karşılaştırması yapın</p>
             </div>
-            <div class="nav-controls">
-                <div class="live-indicator">
-                    <div class="live-dot"></div>
-                    <span>Canlı Takip</span>
-                </div>
-                <button type="button" class="btn btn-secondary" id="uploadNewExcelBtn" style="display: none;">
-                    <i class="fas fa-upload"></i>
-                    Yeni Excel Yükle
-                </button>
-            </div>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Upload Section -->
-        <section class="upload-section container" id="uploadSection">
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
-                <h2>Excel Dosyanızı Yükleyin</h2>
-                <p>Ürün listesi ve rakip linklerini içeren Excel dosyanızı buraya sürükleyin</p>
-                <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls">
-                <button type="button" class="btn" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-file-excel"></i>
-                    Dosya Seç
-                </button>
-                <div style="margin-top: 1rem;">
-                    <button type="button" class="btn btn-secondary" onclick="downloadSample()">
-                        <i class="fas fa-download"></i>
-                        Örnek Excel İndir
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Progress -->
-        <div class="progress-container" id="progressContainer">
-            <div class="loading-content">
-                <div class="loading-title">Fiyat Savaşı Başlıyor!</div>
-                <div class="loading-subtitle">Ürünleriniz rakiplerle karşılaştırılıyor...</div>
-                
-                <div class="versus-container">
-                    <div class="versus-side">
-                        <div class="versus-icon products">
-                            <i class="fas fa-box"></i>
-                        </div>
-                        <span>Ürünleriniz</span>
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5><i class="fas fa-upload me-2"></i>Excel Dosyası Yükle</h5>
+                        <input type="file" id="excelFile" class="form-control" accept=".xlsx,.xls">
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Desteklenen formatlar: .xlsx, .xls (Maksimum 10MB)
+                        </small>
                     </div>
-                    
-                    <div class="versus-vs">VS</div>
-                    <div class="battle-sparks">
-                        <div class="spark"></div>
-                        <div class="spark"></div>
-                        <div class="spark"></div>
-                        <div class="spark"></div>
-                        <div class="spark"></div>
-                        <div class="spark"></div>
-                    </div>
-                    
-                    <div class="versus-side">
-                        <div class="versus-icon competitors">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <span>Rakipler</span>
-                    </div>
-                </div>
-
-                <div class="circular-progress">
-                    <svg>
-                        <defs>
-                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#6366f1"/>
-                                <stop offset="100%" style="stop-color:#10b981"/>
-                            </linearGradient>
-                        </defs>
-                        <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
-                        <circle class="progress-circle" cx="60" cy="60" r="50" id="progressCircle"></circle>
-                    </svg>
-                    <div class="progress-percentage" id="progressPercentage">0%</div>
-                </div>
-
-                <div class="current-product" id="currentProductInfo">
-                    <div class="current-product-name" id="currentProductName">Hazırlanıyor...</div>
-                    <div class="current-stats">
-                        <span id="currentProgress">0 / 0</span>
-                        <span id="currentTime">00:00</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Comparison Section -->
-        <section class="comparison-section container" id="comparisonSection">
-            <div class="table-controls">
-                <div class="auto-refresh-controls">
-                    <button type="button" class="btn btn-refresh" id="manualRefreshBtn" title="Şimdi Güncelle">
-                        <i class="fas fa-sync-alt"></i>
-                        Güncelle
-                    </button>
-                    <label>Otomatik Güncelleme:</label>
-                    <select id="refreshInterval">
-                        <option value="0">Kapalı</option>
-                        <option value="300000">5 Dakika</option>
-                        <option value="600000">10 Dakika</option>
-                        <option value="1800000">30 Dakika</option>
-                        <option value="3600000" selected>1 Saat</option>
-                    </select>
-                    <button type="button" class="btn" id="startAutoRefresh">
-                        <i class="fas fa-play"></i>
-                        Başlat
-                    </button>
-                </div>
-                <div class="search-controls">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="productSearch" placeholder="Ürün ara..." />
-                        <button type="button" id="clearSearch" title="Temizle">
-                            <i class="fas fa-times"></i>
+                    <div class="col-md-4 text-end">
+                        <button id="uploadBtn" class="btn btn-primary me-2">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Dosya Yükle
+                        </button>
+                        <button id="sampleBtn" class="btn btn-outline-primary">
+                            <i class="fas fa-download me-2"></i>Örnek İndir
                         </button>
                     </div>
-                    <div class="search-results" id="searchResults">
-                        <span>Tüm ürünler gösteriliyor</span>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section" id="filterSection" style="display: none;">
+                <h5><i class="fas fa-filter me-2"></i>Filtreleme ve Sıralama</h5>
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label>Sıralama</label>
+                        <select id="sortBy" class="form-select">
+                            <option value="rank">Sıraya Göre</option>
+                            <option value="price">Fiyata Göre</option>
+                            <option value="name">İsme Göre</option>
+                            <option value="site">Siteye Göre</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>Sıralama Yönü</label>
+                        <select id="sortOrder" class="form-select">
+                            <option value="asc">Artan</option>
+                            <option value="desc">Azalan</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>Site Filtresi</label>
+                        <select id="siteFilter" class="form-select">
+                            <option value="">Tüm Siteler</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>Durum Filtresi</label>
+                        <select id="statusFilter" class="form-select">
+                            <option value="">Tümü</option>
+                            <option value="success">Başarılı</option>
+                            <option value="error">Hatalı</option>
+                            <option value="notfound">Bulunamayan</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>Fiyat Aralığı (Min)</label>
+                        <input type="number" id="minPrice" class="form-control" placeholder="Min fiyat">
+                    </div>
+                    <div class="filter-item">
+                        <label>Fiyat Aralığı (Max)</label>
+                        <input type="number" id="maxPrice" class="form-control" placeholder="Max fiyat">
                     </div>
                 </div>
-                <div class="live-indicator">
-                    <span id="lastUpdateTime">Son güncelleme: -</span>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progressSection" style="display: none;" class="mx-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5><i class="fas fa-tasks me-2"></i>İşlem Durumu</h5>
+                    <button id="cancelBtn" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-stop me-1"></i>Durdur
+                    </button>
+                </div>
+                <div class="progress mb-2">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%">
+                        <span id="progressText">0%</span>
+                    </div>
+                </div>
+                <div id="currentProduct" class="text-muted small"></div>
+            </div>
+
+            <!-- Comparison Button -->
+            <div class="text-center my-4">
+                <button id="compareBtn" class="btn btn-success btn-lg" style="display: none;">
+                    <i class="fas fa-play me-2"></i>Toplu Karşılaştırma Başlat
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" style="display: none;">
+                <!-- Summary -->
+                <div id="summarySection" class="comparison-summary">
+                    <h5><i class="fas fa-chart-bar me-2"></i>Karşılaştırma Özeti</h5>
+                    <div id="summaryContent"></div>
+                </div>
+
+                <!-- Export Section -->
+                <div class="export-section">
+                    <h5><i class="fas fa-download me-2"></i>Sonuçları Dışa Aktar</h5>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button id="exportExcel" class="btn btn-outline-primary">
+                            <i class="fas fa-file-excel me-1"></i>Excel
+                        </button>
+                        <button id="exportCSV" class="btn btn-outline-primary">
+                            <i class="fas fa-file-csv me-1"></i>CSV
+                        </button>
+                        <button id="exportJSON" class="btn btn-outline-primary">
+                            <i class="fas fa-file-code me-1"></i>JSON
+                        </button>
+                        <button id="exportPDF" class="btn btn-outline-primary">
+                            <i class="fas fa-file-pdf me-1"></i>PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sıra</th>
+                                    <th>Ürün</th>
+                                    <th>Site</th>
+                                    <th>Fiyat</th>
+                                    <th>Fark</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTable">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="comparison-table-container">
-                <div class="table-wrapper">
-                    <table class="comparison-table" id="comparisonTable">
-                        <thead>
-                            <tr id="tableHeader">
-                                <th>Ürün Adı</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                        </tbody>
-                    </table>
+            <!-- Log Section -->
+            <div id="logSection" class="log-container" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6><i class="fas fa-terminal me-2"></i>İşlem Logları</h6>
+                    <div>
+                        <button id="clearLogs" class="btn btn-outline-secondary btn-sm me-2">
+                            <i class="fas fa-trash me-1"></i>Temizle
+                        </button>
+                        <button id="toggleLogs" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-eye-slash me-1"></i>Gizle
+                        </button>
+                    </div>
                 </div>
+                <div id="logContent"></div>
             </div>
-        </section>
 
-        <!-- Statistics -->
-        <section class="stats-section container" id="statsSection">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalProducts">0</div>
-                    <div class="stat-label">Toplam Ürün</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalCompanies">0</div>
-                    <div class="stat-label">Firma Sayısı</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="successRate">0%</div>
-                    <div class="stat-label">Başarı Oranı</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="avgUpdateTime">-</div>
-                    <div class="stat-label">Ort. Güncelleme</div>
-                </div>
-            </div>
-        </section>
-    </main>
+            <!-- Alert Section -->
+            <div id="alertSection"></div>
+        </div>
+    </div>
 
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let currentProducts = [];
-        let comparisonData = [];
-        let autoRefreshInterval = null;
-        let isProcessing = false;
-        let companies = [];
-
-        // File upload handling
-        const fileInput = document.getElementById('fileInput');
-        const uploadArea = document.getElementById('uploadArea');
-        const uploadSection = document.getElementById('uploadSection');
-        const comparisonSection = document.getElementById('comparisonSection');
-        const statsSection = document.getElementById('statsSection');
-        const progressContainer = document.getElementById('progressContainer');
-        const uploadNewExcelBtn = document.getElementById('uploadNewExcelBtn');
-
-        // Drag and drop
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileUpload(files[0]);
-            }
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileUpload(e.target.files[0]);
-            }
-        });
-
-        uploadNewExcelBtn.addEventListener('click', () => {
-            uploadSection.style.display = 'block';
-            comparisonSection.style.display = 'none';
-            statsSection.style.display = 'none';
-            uploadNewExcelBtn.style.display = 'none';
-            
-            // Stop auto refresh
-            if (autoRefreshInterval) {
-                clearInterval(autoRefreshInterval);
-                autoRefreshInterval = null;
-                document.getElementById('startAutoRefresh').innerHTML = '<i class="fas fa-play"></i> Başlat';
-            }
-        });
-
-        async function handleFileUpload(file) {
-            if (isProcessing) {
-                showNotification('Bir işlem zaten devam ediyor!', 'error');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('excelFile', file);
-
-            try {
-                isProcessing = true;
-                showNotification('Excel dosyası yükleniyor...', 'success');
-
-                const response = await fetch('/api/upload-excel', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    currentProducts = result.products;
-                    showNotification(`${result.products.length} ürün yüklendi!`, 'success');
-                    
-                    // Hide upload section and show comparison
-                    uploadSection.style.display = 'none';
-                    uploadNewExcelBtn.style.display = 'inline-flex';
-                    
-                    startComparison();
-                } else {
-                    showNotification(`Hata: ${result.error}`, 'error');
-                }
-            } catch (error) {
-                showNotification(`Yükleme hatası: ${error.message}`, 'error');
-            } finally {
-                isProcessing = false;
-            }
-        }
-
-        async function startComparison() {
-            if (currentProducts.length === 0) {
-                showNotification('Önce Excel dosyası yükleyin!', 'error');
-                return;
-            }
-
-            progressContainer.style.display = 'flex';
-            
-            const progressCircle = document.getElementById('progressCircle');
-            const progressPercentage = document.getElementById('progressPercentage');
-            const currentProductName = document.getElementById('currentProductName');
-            const currentProgress = document.getElementById('currentProgress');
-            const currentTime = document.getElementById('currentTime');
-            
-            let startTime = Date.now();
-
-            try {
-                const params = new URLSearchParams({
-                    products: JSON.stringify(currentProducts)
-                });
+        class PriceComparisonApp {
+            constructor() {
+                this.products = [];
+                this.results = [];
+                this.isProcessing = false;
+                this.eventSource = null;
+                this.currentFilters = {
+                    sortBy: 'rank',
+                    sortOrder: 'asc',
+                    siteFilter: '',
+                    statusFilter: '',
+                    minPrice: '',
+                    maxPrice: ''
+                };
                 
-                const eventSource = new EventSource(`/api/batch-compare?${params}`);
+                this.initializeEventListeners();
+                this.showLog('Uygulama başlatıldı', 'info');
+            }
+
+            initializeEventListeners() {
+                // File upload
+                document.getElementById('uploadBtn').addEventListener('click', () => this.uploadExcel());
+                document.getElementById('sampleBtn').addEventListener('click', () => this.downloadSample());
                 
-                eventSource.onmessage = function(event) {
-                    const data = JSON.parse(event.data);
-                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-                    const minutes = Math.floor(elapsed / 60);
-                    const seconds = elapsed % 60;
-                    currentTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    
-                    switch(data.type) {
-                        case 'start':
-                            currentProductName.textContent = 'Savaş başlıyor...';
-                            currentProgress.textContent = `0 / ${data.total}`;
-                            break;
-                            
-                        case 'progress':
-                            const percent = Math.round((data.current / data.total) * 100);
-                            const circumference = 314.16; // 2 * Math.PI * 50
-                            const offset = circumference - (percent / 100) * circumference;
-                            progressCircle.style.strokeDashoffset = offset;
-                            progressPercentage.textContent = `${percent}%`;
-                            currentProductName.textContent = data.productName;
-                            currentProgress.textContent = `${data.current} / ${data.total}`;
-                            break;
-                            
-                        case 'complete':
-                            eventSource.close();
-                            progressContainer.style.display = 'none';
-                            comparisonData = data.results;
-                            buildComparisonTable();
-                            comparisonSection.style.display = 'block';
-                            statsSection.style.display = 'block';
-                            updateStats(data.totalProcessed, data.successCount, data.errorCount);
-                            updateLastUpdateTime();
-                            showNotification('Karşılaştırma tamamlandı!', 'success');
-                            break;
-                            
-                        case 'error':
-                            eventSource.close();
-                            progressContainer.style.display = 'none';
-                            showNotification(`Hata: ${data.error}`, 'error');
-                            break;
+                // Comparison
+                document.getElementById('compareBtn').addEventListener('click', () => this.startComparison());
+                document.getElementById('cancelBtn').addEventListener('click', () => this.cancelComparison());
+                
+                // Export buttons
+                document.getElementById('exportExcel').addEventListener('click', () => this.exportResults('excel'));
+                document.getElementById('exportCSV').addEventListener('click', () => this.exportResults('csv'));
+                document.getElementById('exportJSON').addEventListener('click', () => this.exportResults('json'));
+                document.getElementById('exportPDF').addEventListener('click', () => this.exportResults('pdf'));
+                
+                // Log controls
+                document.getElementById('clearLogs').addEventListener('click', () => this.clearLogs());
+                document.getElementById('toggleLogs').addEventListener('click', () => this.toggleLogs());
+                
+                // Filter controls
+                document.getElementById('sortBy').addEventListener('change', () => this.applyFilters());
+                document.getElementById('sortOrder').addEventListener('change', () => this.applyFilters());
+                document.getElementById('siteFilter').addEventListener('change', () => this.applyFilters());
+                document.getElementById('statusFilter').addEventListener('change', () => this.applyFilters());
+                document.getElementById('minPrice').addEventListener('input', () => this.applyFilters());
+                document.getElementById('maxPrice').addEventListener('input', () => this.applyFilters());
+                
+                // File input change
+                document.getElementById('excelFile').addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-cloud-upload-alt me-2"></i>Yükle: ' + e.target.files[0].name;
                     }
-                };
-                
-                eventSource.onerror = function(error) {
-                    eventSource.close();
-                    progressContainer.style.display = 'none';
-                    showNotification('Bağlantı hatası oluştu', 'error');
-                };
-                
-            } catch (error) {
-                progressContainer.style.display = 'none';
-                showNotification(`Karşılaştırma hatası: ${error.message}`, 'error');
+                });
             }
-        }
 
-        function buildComparisonTable() {
-            if (!comparisonData || comparisonData.length === 0) return;
-
-            // Extract all unique companies
-            companies = [];
-            const companySet = new Set();
-            
-            comparisonData.forEach(result => {
-                if (result.success && result.comparison && result.comparison.ranking) {
-                    result.comparison.ranking.forEach(item => {
-                        const domain = getDomainName(item.url);
-                        companySet.add(domain);
-                    });
-                }
-            });
-            
-            companies = Array.from(companySet).sort();
-
-            // Build table header
-            const tableHeader = document.getElementById('tableHeader');
-            tableHeader.innerHTML = '<th>Ürün Adı</th>';
-            
-            companies.forEach(company => {
-                const th = document.createElement('th');
-                th.className = 'company-header';
-                th.textContent = company;
-                tableHeader.appendChild(th);
-            });
-
-            // Build table body
-            const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
-
-            comparisonData.forEach(result => {
-                const row = document.createElement('tr');
+            async uploadExcel() {
+                const fileInput = document.getElementById('excelFile');
+                const file = fileInput.files[0];
                 
-                // Product name cell
-                const productCell = document.createElement('td');
-                productCell.textContent = result.productName;
-                row.appendChild(productCell);
-
-                // Create price map for this product
-                const priceMap = new Map();
-                let minPrice = Infinity;
-                let maxPrice = -Infinity;
-                
-                if (result.success && result.comparison && result.comparison.ranking) {
-                    result.comparison.ranking.forEach(item => {
-                        if (item.price && item.price > 0) {
-                            const domain = getDomainName(item.url);
-                            priceMap.set(domain, {
-                                price: item.price,
-                                url: item.url,
-                                title: item.title,
-                                error: item.error,
-                                notFound: item.notFound
-                            });
-                            minPrice = Math.min(minPrice, item.price);
-                            maxPrice = Math.max(maxPrice, item.price);
-                        }
-                    });
+                if (!file) {
+                    this.showAlert('Lütfen bir Excel dosyası seçin', 'warning');
+                    return;
                 }
-
-                // Create cells for each company
-                companies.forEach(company => {
-                    const cell = document.createElement('td');
-                    const priceData = priceMap.get(company);
+                
+                if (file.size > 10 * 1024 * 1024) {
+                    this.showAlert('Dosya boyutu 10MB\'dan büyük olamaz', 'danger');
+                    return;
+                }
+                
+                const formData = new FormData();
+                formData.append('excelFile', file);
+                
+                try {
+                    this.showLog('Excel dosyası yükleniyor...', 'info');
                     
-                    if (priceData && priceData.price) {
-                        const priceCell = document.createElement('div');
-                        priceCell.className = 'price-cell';
+                    const response = await fetch('/api/upload-excel', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        this.products = result.products;
+                        this.showAlert(`${result.products.length} ürün başarıyla yüklendi`, 'success');
+                        this.showLog(`${result.products.length} ürün yüklendi`, 'success');
                         
-                        // Determine if this is best or worst price
-                        if (priceData.price === minPrice && minPrice !== maxPrice) {
-                            priceCell.classList.add('best-price');
-                        } else if (priceData.price === maxPrice && minPrice !== maxPrice) {
-                            priceCell.classList.add('worst-price');
-                        }
+                        document.getElementById('compareBtn').style.display = 'block';
+                        document.getElementById('filterSection').style.display = 'block';
                         
-                        priceCell.innerHTML = `
-                            <div>${priceData.price.toLocaleString('tr-TR')} ₺</div>
-                            <div class="last-updated">${new Date().toLocaleTimeString('tr-TR')}</div>
-                        `;
-                        
-                        cell.appendChild(priceCell);
+                        this.populateSiteFilter();
+                        this.showProductPreview();
                     } else {
-                        const priceCell = document.createElement('div');
-                        priceCell.className = 'price-cell no-price';
-                        priceCell.textContent = 'Fiyat Yok';
-                        cell.appendChild(priceCell);
+                        this.showAlert('Excel dosyası yüklenirken hata: ' + result.error, 'danger');
+                        this.showLog('Excel yükleme hatası: ' + result.error, 'error');
                     }
-                    
-                    row.appendChild(cell);
-                });
-
-                row.className = 'product-row';
-                tableBody.appendChild(row);
-            });
-            
-            // Update search functionality with new rows
-            allProductRows = Array.from(document.querySelectorAll('#tableBody tr'));
-            
-            // Re-apply current search if exists
-            const currentSearch = productSearch.value.toLowerCase().trim();
-            if (currentSearch) {
-                filterProducts(currentSearch);
-            }
-        }
-
-        async function refreshPrices() {
-            if (isProcessing || !currentProducts.length) return;
-
-            isProcessing = true;
-            
-            // Mark all price cells as updating
-            document.querySelectorAll('.price-cell').forEach(cell => {
-                if (!cell.classList.contains('no-price')) {
-                    cell.classList.add('updating');
+                } catch (error) {
+                    this.showAlert('Excel dosyası yüklenirken hata oluştu', 'danger');
+                    this.showLog('Excel yükleme hatası: ' + error.message, 'error');
                 }
-            });
+            }
 
-            try {
-                const params = new URLSearchParams({
-                    products: JSON.stringify(currentProducts)
-                });
+            populateSiteFilter() {
+                const siteFilter = document.getElementById('siteFilter');
+                const sites = new Set();
                 
-                const eventSource = new EventSource(`/api/batch-compare?${params}`);
-                
-                eventSource.onmessage = function(event) {
-                    const data = JSON.parse(event.data);
-                    
-                    if (data.type === 'complete') {
-                        eventSource.close();
-                        comparisonData = data.results;
-                        buildComparisonTable();
-                        updateStats(data.totalProcessed, data.successCount, data.errorCount);
-                        updateLastUpdateTime();
-                        
-                        // Remove updating class
-                        document.querySelectorAll('.price-cell').forEach(cell => {
-                            cell.classList.remove('updating');
+                this.products.forEach(product => {
+                    try {
+                        sites.add(new URL(product.mainSiteUrl).hostname);
+                        product.competitorUrls.forEach(url => {
+                            sites.add(new URL(url).hostname);
                         });
-                        
-                        isProcessing = false;
-                        showNotification(`Fiyatlar güncellendi! ${data.successCount}/${data.totalProcessed} başarılı`, 'success');
+                    } catch (e) {
+                        // Invalid URL, skip
                     }
-                };
-                
-                eventSource.onerror = function(error) {
-                    eventSource.close();
-                    isProcessing = false;
-                    document.querySelectorAll('.price-cell').forEach(cell => {
-                        cell.classList.remove('updating');
-                    });
-                    showNotification('Güncelleme hatası!', 'error');
-                };
-                
-            } catch (error) {
-                isProcessing = false;
-                document.querySelectorAll('.price-cell').forEach(cell => {
-                    cell.classList.remove('updating');
                 });
-                showNotification(`Güncelleme hatası: ${error.message}`, 'error');
-            }
-        }
-
-        function getDomainName(url) {
-            try {
-                return new URL(url).hostname.replace('www.', '');
-            } catch {
-                return url;
-            }
-        }
-
-        function updateStats(total, successful, failed) {
-            document.getElementById('totalProducts').textContent = total;
-            document.getElementById('totalCompanies').textContent = companies.length;
-            document.getElementById('successRate').textContent = 
-                total > 0 ? Math.round((successful / total) * 100) + '%' : '0%';
-        }
-
-        function updateLastUpdateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('tr-TR');
-            document.getElementById('lastUpdateTime').textContent = `Son güncelleme: ${timeString}`;
-        }
-
-        // Auto refresh functionality
-        const refreshIntervalSelect = document.getElementById('refreshInterval');
-        const startAutoRefreshBtn = document.getElementById('startAutoRefresh');
-        const manualRefreshBtn = document.getElementById('manualRefreshBtn');
-
-        // Search functionality
-        const productSearch = document.getElementById('productSearch');
-        const clearSearch = document.getElementById('clearSearch');
-        const searchResults = document.getElementById('searchResults');
-        let allProductRows = [];
-
-        productSearch.addEventListener('input', handleSearch);
-        clearSearch.addEventListener('click', clearSearchInput);
-
-        function handleSearch() {
-            const searchTerm = productSearch.value.toLowerCase().trim();
-            const searchBox = productSearch.parentElement;
-            
-            // Toggle clear button visibility
-            if (searchTerm) {
-                searchBox.classList.add('has-text');
-            } else {
-                searchBox.classList.remove('has-text');
-            }
-            
-            filterProducts(searchTerm);
-        }
-
-        function filterProducts(searchTerm) {
-            if (!allProductRows.length) {
-                allProductRows = Array.from(document.querySelectorAll('#tableBody tr'));
-            }
-            
-            let visibleCount = 0;
-            let highlightedCount = 0;
-            
-            allProductRows.forEach(row => {
-                const productName = row.querySelector('td:first-child').textContent.toLowerCase();
-                const isMatch = !searchTerm || productName.includes(searchTerm);
                 
-                if (isMatch) {
-                    row.classList.remove('hidden');
-                    visibleCount++;
+                siteFilter.innerHTML = '<option value="">Tüm Siteler</option>';
+                Array.from(sites).sort().forEach(site => {
+                    siteFilter.innerHTML += `<option value="${site}">${site}</option>`;
+                });
+            }
+
+            showProductPreview() {
+                const previewHtml = `
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-eye me-2"></i>Yüklenen Ürünler Önizlemesi</h6>
+                        <div class="row">
+                            ${this.products.slice(0, 3).map(product => `
+                                <div class="col-md-4 mb-2">
+                                    <strong>${product.productName}</strong><br>
+                                    <small class="text-muted">${product.totalCompetitors} rakip site</small>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${this.products.length > 3 ? `<small class="text-muted">... ve ${this.products.length - 3} ürün daha</small>` : ''}
+                    </div>
+                `;
+                
+                document.getElementById('alertSection').innerHTML = previewHtml;
+            }
+
+            async downloadSample() {
+                try {
+                    this.showLog('Örnek dosya indiriliyor...', 'info');
                     
-                    // Highlight exact matches
-                    if (searchTerm && productName.includes(searchTerm)) {
-                        row.classList.add('highlighted');
-                        highlightedCount++;
+                    const response = await fetch('/api/sample-excel');
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'ornek_urunler.xlsx';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                        
+                        this.showAlert('Örnek dosya indirildi', 'success');
+                        this.showLog('Örnek dosya başarıyla indirildi', 'success');
                     } else {
-                        row.classList.remove('highlighted');
+                        throw new Error('Dosya indirilemedi');
                     }
+                } catch (error) {
+                    this.showAlert('Örnek dosya indirilemedi', 'danger');
+                    this.showLog('Örnek dosya indirme hatası: ' + error.message, 'error');
+                }
+            }
+
+            async startComparison() {
+                if (this.products.length === 0) {
+                    this.showAlert('Önce Excel dosyası yükleyin', 'warning');
+                    return;
+                }
+                
+                this.isProcessing = true;
+                this.results = [];
+                
+                // UI updates
+                document.getElementById('compareBtn').style.display = 'none';
+                document.getElementById('progressSection').style.display = 'block';
+                document.getElementById('logSection').style.display = 'block';
+                
+                this.showLog(`${this.products.length} ürün için karşılaştırma başlatılıyor...`, 'info');
+                
+                try {
+                    // Use Server-Sent Events for real-time updates
+                    const productsParam = encodeURIComponent(JSON.stringify(this.products));
+                    this.eventSource = new EventSource(`/api/batch-compare?products=${productsParam}`);
+                    
+                    this.eventSource.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.handleComparisonUpdate(data);
+                    };
+                    
+                    this.eventSource.onerror = (error) => {
+                        console.error('EventSource error:', error);
+                        this.handleComparisonError('Bağlantı hatası oluştu');
+                    };
+                    
+                } catch (error) {
+                    this.handleComparisonError(error.message);
+                }
+            }
+
+            handleComparisonUpdate(data) {
+                switch (data.type) {
+                    case 'start':
+                        this.updateProgress(0, data.total, 'Karşılaştırma başlatıldı...');
+                        break;
+                        
+                    case 'progress':
+                        this.updateProgress(data.current, data.total, `İşleniyor: ${data.productName}`);
+                        this.showLog(`${data.current}/${data.total} - ${data.productName}`, 'info');
+                        break;
+                        
+                    case 'product_complete':
+                        this.results.push(data.result);
+                        this.showLog(`✅ Tamamlandı: ${data.productName}`, 'success');
+                        break;
+                        
+                    case 'product_error':
+                        this.results.push(data);
+                        this.showLog(`❌ Hata: ${data.productName} - ${data.error}`, 'error');
+                        break;
+                        
+                    case 'complete':
+                        this.handleComparisonComplete(data);
+                        break;
+                        
+                    case 'error':
+                        this.handleComparisonError(data.error);
+                        break;
+                }
+            }
+
+            handleComparisonComplete(data) {
+                this.isProcessing = false;
+                this.eventSource.close();
+                
+                this.updateProgress(100, 100, 'Karşılaştırma tamamlandı!');
+                this.showLog(`🎉 Karşılaştırma tamamlandı! ${data.successCount} başarılı, ${data.errorCount} hatalı`, 'success');
+                
+                // Hide progress, show results
+                setTimeout(() => {
+                    document.getElementById('progressSection').style.display = 'none';
+                    document.getElementById('resultsSection').style.display = 'block';
+                    document.getElementById('compareBtn').style.display = 'block';
+                    
+                    this.displayResults();
+                    this.showAlert(`Karşılaştırma tamamlandı! ${data.successCount} başarılı, ${data.errorCount} hatalı`, 'success');
+                }, 1000);
+            }
+
+            handleComparisonError(error) {
+                this.isProcessing = false;
+                if (this.eventSource) {
+                    this.eventSource.close();
+                }
+                
+                document.getElementById('progressSection').style.display = 'none';
+                document.getElementById('compareBtn').style.display = 'block';
+                
+                this.showAlert('Karşılaştırma sırasında hata: ' + error, 'danger');
+                this.showLog('Karşılaştırma hatası: ' + error, 'error');
+            }
+
+            cancelComparison() {
+                if (this.eventSource) {
+                    this.eventSource.close();
+                }
+                
+                this.isProcessing = false;
+                document.getElementById('progressSection').style.display = 'none';
+                document.getElementById('compareBtn').style.display = 'block';
+                
+                this.showAlert('Karşılaştırma durduruldu', 'warning');
+                this.showLog('Karşılaştırma kullanıcı tarafından durduruldu', 'info');
+            }
+
+            updateProgress(current, total, message) {
+                const percentage = Math.round((current / total) * 100);
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
+                const currentProduct = document.getElementById('currentProduct');
+                
+                progressBar.style.width = percentage + '%';
+                progressText.textContent = percentage + '%';
+                currentProduct.textContent = message;
+            }
+
+            displayResults() {
+                if (this.results.length === 0) {
+                    this.showAlert('Gösterilecek sonuç bulunamadı', 'info');
+                    return;
+                }
+                
+                this.displaySummary();
+                this.displayResultsTable();
+            }
+
+            displaySummary() {
+                const successfulResults = this.results.filter(r => r.success);
+                const totalProducts = this.results.length;
+                const successCount = successfulResults.length;
+                const errorCount = totalProducts - successCount;
+                
+                let totalComparisons = 0;
+                let bestDeals = 0;
+                
+                successfulResults.forEach(result => {
+                    if (result.comparison && result.comparison.ranking) {
+                        totalComparisons += result.comparison.ranking.length;
+                        
+                        // Ana ürün en ucuz mu kontrol et
+                        const mainProductRank = result.comparison.ranking.find(r => r.isMainProduct);
+                        if (mainProductRank && mainProductRank.rank === 1) {
+                            bestDeals++;
+                        }
+                    }
+                });
+                
+                const summaryHtml = `
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="summary-item">
+                                <span class="summary-label">Toplam Ürün:</span>
+                                <span class="summary-value">${totalProducts}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-item">
+                                <span class="summary-label">Başarılı:</span>
+                                <span class="summary-value text-success">${successCount}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-item">
+                                <span class="summary-label">Hatalı:</span>
+                                <span class="summary-value text-danger">${errorCount}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-item">
+                                <span class="summary-label">En İyi Fiyat:</span>
+                                <span class="summary-value text-primary">${bestDeals}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('summaryContent').innerHTML = summaryHtml;
+            }
+
+            displayResultsTable() {
+                const tableBody = document.getElementById('resultsTable');
+                let html = '';
+                
+                // Flatten all rankings from all products
+                const allRankings = [];
+                
+                this.results.forEach(result => {
+                    if (result.success && result.comparison && result.comparison.ranking) {
+                        result.comparison.ranking.forEach(ranking => {
+                            allRankings.push({
+                                ...ranking,
+                                productName: result.productName,
+                                productId: result.id
+                            });
+                        });
+                    } else {
+                        // Add failed products
+                        allRankings.push({
+                            productName: result.productName,
+                            productId: result.id,
+                            url: 'N/A',
+                            title: result.error || 'Hata',
+                            price: null,
+                            rank: 999,
+                            isMainProduct: false,
+                            error: result.error,
+                            notFound: result.notFound || false
+                        });
+                    }
+                });
+                
+                // Apply filters
+                const filteredRankings = this.applyFiltersToData(allRankings);
+                
+                filteredRankings.forEach(ranking => {
+                    const rowClass = ranking.error ? (ranking.notFound ? 'not-found-row' : 'error-row') : 
+                                    (ranking.isMainProduct ? 'main-product' : '');
+                    
+                    const rankBadge = ranking.rank <= 3 && !ranking.error ? 
+                        `<span class="rank-badge rank-${ranking.rank}">${ranking.rank}</span>` :
+                        `<span class="rank-badge rank-other">${ranking.rank === 999 ? '-' : ranking.rank}</span>`;
+                    
+                    const priceDisplay = ranking.price ? 
+                        `<span class="price-cell">${ranking.price.toLocaleString('tr-TR')} ₺</span>` : 
+                        '<span class="text-muted">-</span>';
+                    
+                    const differenceDisplay = ranking.priceDifference !== null && ranking.priceDifference !== undefined ? 
+                        `<span class="text-${ranking.priceDifference === 0 ? 'success' : 'warning'}">
+                            ${ranking.priceDifference > 0 ? '+' : ''}${ranking.priceDifference.toLocaleString('tr-TR')} ₺
+                            ${ranking.percentageDifference ? `(${ranking.percentageDifference > 0 ? '+' : ''}${ranking.percentageDifference}%)` : ''}
+                        </span>` : 
+                        '<span class="text-muted">-</span>';
+                    
+                    const statusDisplay = ranking.error ? 
+                        `<span class="badge bg-danger">${ranking.notFound ? 'Bulunamadı' : 'Hata'}</span>` :
+                        `<span class="badge bg-success">Başarılı</span>`;
+                    
+                    const siteDisplay = ranking.url !== 'N/A' ? 
+                        `<img src="https://www.google.com/s2/favicons?domain=${new URL(ranking.url).hostname}" class="site-favicon" onerror="this.style.display='none'">
+                         <span class="url-cell">${new URL(ranking.url).hostname}</span>` : 
+                        '<span class="text-muted">-</span>';
+                    
+                    html += `
+                        <tr class="${rowClass}">
+                            <td>${rankBadge}</td>
+                            <td>
+                                <strong>${ranking.productName}</strong><br>
+                                <small class="text-muted">${ranking.title || 'Başlık bulunamadı'}</small>
+                            </td>
+                            <td>${siteDisplay}</td>
+                            <td>${priceDisplay}</td>
+                            <td>${differenceDisplay}</td>
+                            <td>${statusDisplay}</td>
+                            <td>
+                                ${ranking.url !== 'N/A' ? `<a href="${ranking.url}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>` : ''}
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                tableBody.innerHTML = html;
+            }
+
+            applyFilters() {
+                // Update current filters
+                this.currentFilters = {
+                    sortBy: document.getElementById('sortBy').value,
+                    sortOrder: document.getElementById('sortOrder').value,
+                    siteFilter: document.getElementById('siteFilter').value,
+                    statusFilter: document.getElementById('statusFilter').value,
+                    minPrice: document.getElementById('minPrice').value,
+                    maxPrice: document.getElementById('maxPrice').value
+                };
+                
+                // Re-display results with new filters
+                if (this.results.length > 0) {
+                    this.displayResultsTable();
+                }
+            }
+
+            applyFiltersToData(data) {
+                let filtered = [...data];
+                
+                // Site filter
+                if (this.currentFilters.siteFilter) {
+                    filtered = filtered.filter(item => {
+                        if (item.url === 'N/A') return false;
+                        try {
+                            return new URL(item.url).hostname === this.currentFilters.siteFilter;
+                        } catch (e) {
+                            return false;
+                        }
+                    });
+                }
+                
+                // Status filter
+                if (this.currentFilters.statusFilter) {
+                    filtered = filtered.filter(item => {
+                        switch (this.currentFilters.statusFilter) {
+                            case 'success': return !item.error;
+                            case 'error': return item.error && !item.notFound;
+                            case 'notfound': return item.notFound;
+                            default: return true;
+                        }
+                    });
+                }
+                
+                // Price range filter
+                if (this.currentFilters.minPrice) {
+                    const minPrice = parseFloat(this.currentFilters.minPrice);
+                    filtered = filtered.filter(item => item.price && item.price >= minPrice);
+                }
+                
+                if (this.currentFilters.maxPrice) {
+                    const maxPrice = parseFloat(this.currentFilters.maxPrice);
+                    filtered = filtered.filter(item => item.price && item.price <= maxPrice);
+                }
+                
+                // Sorting
+                filtered.sort((a, b) => {
+                    let aVal, bVal;
+                    
+                    switch (this.currentFilters.sortBy) {
+                        case 'price':
+                            aVal = a.price || 0;
+                            bVal = b.price || 0;
+                            break;
+                        case 'name':
+                            aVal = a.productName || '';
+                            bVal = b.productName || '';
+                            break;
+                        case 'site':
+                            aVal = a.url !== 'N/A' ? new URL(a.url).hostname : '';
+                            bVal = b.url !== 'N/A' ? new URL(b.url).hostname : '';
+                            break;
+                        default: // rank
+                            aVal = a.rank || 999;
+                            bVal = b.rank || 999;
+                    }
+                    
+                    if (this.currentFilters.sortOrder === 'desc') {
+                        return aVal < bVal ? 1 : -1;
+                    } else {
+                        return aVal > bVal ? 1 : -1;
+                    }
+                });
+                
+                return filtered;
+            }
+
+            async exportResults(format) {
+                if (this.results.length === 0) {
+                    this.showAlert('Dışa aktarılacak sonuç bulunamadı', 'warning');
+                    return;
+                }
+                
+                try {
+                    this.showLog(`${format.toUpperCase()} formatında dışa aktarılıyor...`, 'info');
+                    
+                    let content, filename, mimeType;
+                    
+                    switch (format) {
+                        case 'excel':
+                            content = this.generateExcelContent();
+                            filename = `fiyat_karsilastirma_${new Date().toISOString().split('T')[0]}.xlsx`;
+                            mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                            break;
+                        case 'csv':
+                            content = this.generateCSVContent();
+                            filename = `fiyat_karsilastirma_${new Date().toISOString().split('T')[0]}.csv`;
+                            mimeType = 'text/csv';
+                            break;
+                        case 'json':
+                            content = JSON.stringify(this.results, null, 2);
+                            filename = `fiyat_karsilastirma_${new Date().toISOString().split('T')[0]}.json`;
+                            mimeType = 'application/json';
+                            break;
+                        case 'pdf':
+                            this.showAlert('PDF dışa aktarma henüz desteklenmiyor', 'info');
+                            return;
+                    }
+                    
+                    const blob = new Blob([content], { type: mimeType });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    this.showAlert(`${format.toUpperCase()} dosyası indirildi`, 'success');
+                    this.showLog(`${format.toUpperCase()} dışa aktarma başarılı`, 'success');
+                    
+                } catch (error) {
+                    this.showAlert(`${format.toUpperCase()} dışa aktarma hatası`, 'danger');
+                    this.showLog(`${format.toUpperCase()} dışa aktarma hatası: ` + error.message, 'error');
+                }
+            }
+
+            generateCSVContent() {
+                let csv = 'Ürün Adı,Site,Başlık,Fiyat,Para Birimi,Sıra,Ana Ürün,Fiyat Farkı,Yüzde Farkı,Durum,Hata\n';
+                
+                this.results.forEach(result => {
+                    if (result.success && result.comparison && result.comparison.ranking) {
+                        result.comparison.ranking.forEach(ranking => {
+                            csv += `"${result.productName}","${ranking.url}","${ranking.title}",${ranking.price || ''},"${ranking.currency}",${ranking.rank},"${ranking.isMainProduct ? 'Evet' : 'Hayır'}",${ranking.priceDifference || ''},${ranking.percentageDifference || ''},"Başarılı",""\n`;
+                        });
+                    } else {
+                        csv += `"${result.productName}","","",,"TL",,"Hayır",,,"Hata","${result.error || ''}"\n`;
+                    }
+                });
+                
+                return csv;
+            }
+
+            generateExcelContent() {
+                // For simplicity, return CSV content for Excel
+                // In a real implementation, you'd use a library like SheetJS
+                return this.generateCSVContent();
+            }
+
+            showAlert(message, type = 'info') {
+                const alertSection = document.getElementById('alertSection');
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                
+                alertSection.innerHTML = alertHtml;
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    const alert = alertSection.querySelector('.alert');
+                    if (alert) {
+                        alert.remove();
+                    }
+                }, 5000);
+            }
+
+            showLog(message, type = 'info') {
+                const logContent = document.getElementById('logContent');
+                const timestamp = new Date().toLocaleTimeString('tr-TR');
+                const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+                
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry log-${type}`;
+                logEntry.innerHTML = `
+                    <span class="log-timestamp">[${timestamp}]</span>
+                    <span class="log-message">${icon} ${message}</span>
+                `;
+                
+                logContent.appendChild(logEntry);
+                logContent.scrollTop = logContent.scrollHeight;
+                
+                // Keep only last 100 log entries
+                while (logContent.children.length > 100) {
+                    logContent.removeChild(logContent.firstChild);
+                }
+            }
+
+            clearLogs() {
+                document.getElementById('logContent').innerHTML = '';
+                this.showLog('Loglar temizlendi', 'info');
+            }
+
+            toggleLogs() {
+                const logContent = document.getElementById('logContent');
+                const toggleBtn = document.getElementById('toggleLogs');
+                
+                if (logContent.style.display === 'none') {
+                    logContent.style.display = 'block';
+                    toggleBtn.innerHTML = '<i class="fas fa-eye-slash me-1"></i>Gizle';
                 } else {
-                    row.classList.add('hidden');
-                    row.classList.remove('highlighted');
-                }
-            });
-            
-            updateSearchResults(searchTerm, visibleCount, highlightedCount);
-        }
-
-        function updateSearchResults(searchTerm, visibleCount, highlightedCount) {
-            const totalProducts = allProductRows.length;
-            
-            if (!searchTerm) {
-                searchResults.textContent = `Tüm ürünler gösteriliyor (${totalProducts})`;
-                searchResults.classList.remove('filtered');
-            } else {
-                if (visibleCount === 0) {
-                    searchResults.textContent = `"${searchTerm}" için sonuç bulunamadı`;
-                    searchResults.classList.add('filtered');
-                } else if (visibleCount === totalProducts) {
-                    searchResults.textContent = `Tüm ürünler "${searchTerm}" ile eşleşiyor (${totalProducts})`;
-                    searchResults.classList.add('filtered');
-                } else {
-                    searchResults.textContent = `${visibleCount} ürün "${searchTerm}" ile eşleşiyor`;
-                    searchResults.classList.add('filtered');
+                    logContent.style.display = 'none';
+                    toggleBtn.innerHTML = '<i class="fas fa-eye me-1"></i>Göster';
                 }
             }
-        }
 
-        function clearSearchInput() {
-            productSearch.value = '';
-            productSearch.parentElement.classList.remove('has-text');
-            filterProducts('');
-            productSearch.focus();
-        }
-
-        startAutoRefreshBtn.addEventListener('click', toggleAutoRefresh);
-        manualRefreshBtn.addEventListener('click', manualRefresh);
-
-        async function manualRefresh() {
-            if (isProcessing || !currentProducts.length) {
-                if (!currentProducts.length) {
-                    showNotification('Önce Excel dosyası yükleyin!', 'error');
-                }
-                return;
-            }
-
-            // Button loading state
-            manualRefreshBtn.disabled = true;
-            manualRefreshBtn.classList.add('loading');
-            manualRefreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Güncelleniyor...';
-
-            try {
-                await refreshPrices();
-            } finally {
-                // Reset button state
-                manualRefreshBtn.disabled = false;
-                manualRefreshBtn.classList.remove('loading');
-                manualRefreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Güncelle';
+            showNotification(title, message, type = 'info') {
+                const container = document.getElementById('notificationContainer');
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <button class="notification-close">&times;</button>
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                `;
+                
+                container.appendChild(notification);
+                
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 5000);
+                
+                // Close button
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.remove();
+                });
             }
         }
 
-        function toggleAutoRefresh() {
-            if (autoRefreshInterval) {
-                clearInterval(autoRefreshInterval);
-                autoRefreshInterval = null;
-                startAutoRefreshBtn.innerHTML = '<i class="fas fa-play"></i> Başlat';
-                showNotification('Otomatik güncelleme durduruldu', 'success');
-            } else {
-                startAutoRefresh();
-            }
-        }
-
-        function startAutoRefresh() {
-            const interval = parseInt(refreshIntervalSelect.value);
-            if (interval === 0 || currentProducts.length === 0) {
-                showNotification('Güncelleme sıklığı seçin!', 'error');
-                return;
-            }
-
-            autoRefreshInterval = setInterval(() => {
-                refreshPrices();
-            }, interval);
-
-            startAutoRefreshBtn.innerHTML = '<i class="fas fa-stop"></i> Durdur';
-            showNotification(`Otomatik güncelleme ${interval/60000} dakikada bir çalışacak`, 'success');
-        }
-
-        async function downloadSample() {
-            try {
-                const response = await fetch('/api/sample-excel');
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'ornek_urunler.xlsx';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-                showNotification('Örnek dosya indirildi!', 'success');
-            } catch (error) {
-                showNotification('Dosya indirme hatası!', 'error');
-            }
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.classList.add('show'), 100);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 4000);
-        }
-
-        // Initialize
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
-            showNotification('3Dcim PriceTracker Pro\'ya hoş geldiniz!', 'success');
+            new PriceComparisonApp();
         });
     </script>
 </body>
